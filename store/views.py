@@ -14,6 +14,15 @@ from django.db.models import Q
 import json
 from cart.cart import Cart
 
+# ecommweb/shop/views.py
+from django.http import JsonResponse
+from .models import Product
+
+def product_list(request):
+    products = Product.objects.all().values("id", "name", "price", "category")
+    return JsonResponse(list(products), safe=False)
+
+
 def search(request):
     # Determine if they filled out the form
     if request.method == "POST":
